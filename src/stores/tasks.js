@@ -62,6 +62,8 @@ export const useTaskStore = defineStore("tasks", () => {
   };
 
   const toggleTask = async (task) => {
+    errorMessage.value = "";
+
     const { error } = await supabase
       .from("tasks")
       .update({ completed: !task.completed })
@@ -74,7 +76,27 @@ export const useTaskStore = defineStore("tasks", () => {
     }
   };
 
+  const updateTask = async (taskId, newTitle, newPriority) => {
+    errorMessage.value = "";
+
+    const { error } = await supabase
+      .from("tasks")
+      .update({
+        title: newTitle,
+        priority: newPriority,
+      })
+      .eq("id", taskId);
+
+    if (error) {
+      errorMessage.value = error.message;
+    } else {
+      await fetchTasks();
+    }
+  };
+
   const deleteTask = async (taskId) => {
+    errorMessage.value = "";
+
     const { error } = await supabase
       .from("tasks")
       .delete()
@@ -94,6 +116,7 @@ export const useTaskStore = defineStore("tasks", () => {
     fetchTasks,
     addTask,
     toggleTask,
+    updateTask,
     deleteTask,
   };
 });

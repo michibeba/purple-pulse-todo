@@ -91,7 +91,40 @@
           :key="task.id"
           class="bg-[#111827] border border-purple-500/20 rounded-2xl p-5 mb-4"
         >
-          <div class="flex justify-between items-start gap-4">
+          <div v-if="editingTaskId === task.id" class="space-y-3">
+            <input
+              v-model="editTitle"
+              type="text"
+              class="w-full p-3 rounded-xl bg-[#1F2937] text-white outline-none border border-purple-500/30"
+            />
+
+            <select
+              v-model="editPriority"
+              class="w-full p-3 rounded-xl bg-[#1F2937] text-white outline-none border border-purple-500/30"
+            >
+              <option>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+            </select>
+
+            <div class="flex gap-2">
+              <button
+                @click="saveEdit(task.id)"
+                class="bg-green-600 hover:bg-green-700 px-3 py-2 rounded-lg"
+              >
+                Save
+              </button>
+
+              <button
+                @click="cancelEdit"
+                class="bg-gray-600 hover:bg-gray-700 px-3 py-2 rounded-lg"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+
+          <div v-else class="flex justify-between items-start gap-4">
             <div>
               <h3 class="text-xl font-bold">
                 {{ task.title }}
@@ -102,7 +135,14 @@
               </p>
             </div>
 
-            <div class="flex gap-2">
+            <div class="flex flex-wrap gap-2">
+              <button
+                @click="startEdit(task)"
+                class="bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg"
+              >
+                Edit
+              </button>
+
               <button
                 @click="taskStore.toggleTask(task)"
                 class="bg-green-600 hover:bg-green-700 px-3 py-2 rounded-lg"
@@ -135,7 +175,40 @@
           :key="task.id"
           class="bg-[#111827] border border-pink-500/20 rounded-2xl p-5 mb-4 opacity-80"
         >
-          <div class="flex justify-between items-start gap-4">
+          <div v-if="editingTaskId === task.id" class="space-y-3">
+            <input
+              v-model="editTitle"
+              type="text"
+              class="w-full p-3 rounded-xl bg-[#1F2937] text-white outline-none border border-pink-500/30"
+            />
+
+            <select
+              v-model="editPriority"
+              class="w-full p-3 rounded-xl bg-[#1F2937] text-white outline-none border border-pink-500/30"
+            >
+              <option>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+            </select>
+
+            <div class="flex gap-2">
+              <button
+                @click="saveEdit(task.id)"
+                class="bg-green-600 hover:bg-green-700 px-3 py-2 rounded-lg"
+              >
+                Save
+              </button>
+
+              <button
+                @click="cancelEdit"
+                class="bg-gray-600 hover:bg-gray-700 px-3 py-2 rounded-lg"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+
+          <div v-else class="flex justify-between items-start gap-4">
             <div>
               <h3 class="text-xl font-bold line-through text-gray-400">
                 {{ task.title }}
@@ -146,7 +219,14 @@
               </p>
             </div>
 
-            <div class="flex gap-2">
+            <div class="flex flex-wrap gap-2">
+              <button
+                @click="startEdit(task)"
+                class="bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg"
+              >
+                Edit
+              </button>
+
               <button
                 @click="taskStore.toggleTask(task)"
                 class="bg-purple-600 hover:bg-purple-700 px-3 py-2 rounded-lg"
@@ -177,6 +257,10 @@ import { useAuthStore } from "../stores/auth";
 const title = ref("");
 const priority = ref("Low");
 
+const editingTaskId = ref(null);
+const editTitle = ref("");
+const editPriority = ref("Low");
+
 const taskStore = useTaskStore();
 const authStore = useAuthStore();
 const router = useRouter();
@@ -198,6 +282,32 @@ const handleAddTask = async () => {
 
   title.value = "";
   priority.value = "Low";
+};
+
+const startEdit = (task) => {
+  editingTaskId.value = task.id;
+  editTitle.value = task.title;
+  editPriority.value = task.priority;
+};
+
+const cancelEdit = () => {
+  editingTaskId.value = null;
+  editTitle.value = "";
+  editPriority.value = "Low";
+};
+
+const saveEdit = async (taskId) => {
+  if (!editTitle.value.trim()) {
+    return;
+  }
+
+  await taskStore.updateTask(
+    taskId,
+    editTitle.value,
+    editPriority.value
+  );
+
+  cancelEdit();
 };
 
 const handleLogout = async () => {
