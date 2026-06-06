@@ -1,3 +1,4 @@
+```md
 # Purple Pulse 💜
 
 Purple Pulse is a BTS/anime-inspired productivity dashboard built with Vue 3. The app allows users to create an account, log in, manage personal tasks, track progress, and organize missions by priority.
@@ -6,7 +7,6 @@ The project was created as a final Vue.js project using Supabase for authenticat
 
 ---
 
-```
 ## Live Demo
 
 [View Purple Pulse live on Netlify](https://purple-pulse-todo.netlify.app)
