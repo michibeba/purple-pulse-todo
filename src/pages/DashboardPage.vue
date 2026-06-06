@@ -26,6 +26,10 @@
       </button>
     </header>
 
+    <section class="mb-10">
+      <DailyFocusCard />
+    </section>
+
     <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
       <div class="lg:col-span-2">
         <TaskForm
@@ -140,6 +144,7 @@ import TaskCard from "../components/TaskCard.vue";
 import ProgressCard from "../components/ProgressCard.vue";
 import StatsCard from "../components/StatsCard.vue";
 import CelebrationOverlay from "../components/CelebrationOverlay.vue";
+import DailyFocusCard from "../components/DailyFocusCard.vue";
 
 const currentFilter = ref("all");
 
