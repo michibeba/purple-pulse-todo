@@ -1,5 +1,8 @@
 <template>
   <div class="min-h-screen bg-[#050816] text-white p-6 md:p-10">
+    <CelebrationOverlay
+      v-if="progressPercent === 100 && taskStore.tasks.length > 0"
+    />
     <header class="flex flex-col md:flex-row justify-between gap-6 md:items-center mb-10">
       <div>
         <p class="text-purple-300 text-sm uppercase tracking-[0.35em] mb-2">
@@ -136,6 +139,7 @@ import TaskForm from "../components/TaskForm.vue";
 import TaskCard from "../components/TaskCard.vue";
 import ProgressCard from "../components/ProgressCard.vue";
 import StatsCard from "../components/StatsCard.vue";
+import CelebrationOverlay from "../components/CelebrationOverlay.vue";
 
 const currentFilter = ref("all");
 
