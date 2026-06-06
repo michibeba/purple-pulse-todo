@@ -6,7 +6,7 @@ The project was created as a final Vue.js project using Supabase for authenticat
 
 ---
 
-```md
+```
 ## Live Demo
 
 [View Purple Pulse live on Netlify](https://purple-pulse-todo.netlify.app)
