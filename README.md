@@ -6,21 +6,16 @@ The project was created as a final Vue.js project using Supabase for authenticat
 
 ---
 
+```md
 ## Live Demo
 
-Live project URL:
-
-```text
-https://purple-pulse-todo.netlify.app
-```
+[View Purple Pulse live on Netlify](https://purple-pulse-todo.netlify.app)
 
 ---
 
 ## GitHub Repository
 
-```text
-https://github.com/michibeba/purple-pulse-todo
-```
+[View the Purple Pulse GitHub repository](https://github.com/michibeba/purple-pulse-todo)
 
 ---
 
