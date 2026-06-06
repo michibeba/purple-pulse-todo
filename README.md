@@ -11,7 +11,7 @@ The project was created as a final Vue.js project using Supabase for authenticat
 Live project URL:
 
 ```text
-Coming soon
+https://purple-pulse-todo.netlify.app
 ```
 
 ---
