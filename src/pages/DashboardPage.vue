@@ -3,6 +3,7 @@
     <CelebrationOverlay
       v-if="progressPercent === 100 && taskStore.tasks.length > 0"
     />
+
     <header class="flex flex-col md:flex-row justify-between gap-6 md:items-center mb-10">
       <div>
         <p class="text-purple-300 text-sm uppercase tracking-[0.35em] mb-2">
@@ -160,16 +161,34 @@ const completedTasks = computed(() => {
   return taskStore.tasks.filter((task) => task.completed);
 });
 
+const getPriorityValue = (taskPriority) => {
+  if (taskPriority === "High") {
+    return 3;
+  }
+
+  if (taskPriority === "Medium") {
+    return 2;
+  }
+
+  return 1;
+};
+
+const sortByPriority = (tasks) => {
+  return [...tasks].sort((a, b) => {
+    return getPriorityValue(b.priority) - getPriorityValue(a.priority);
+  });
+};
+
 const filteredTasks = computed(() => {
   if (currentFilter.value === "pending") {
-    return pendingTasks.value;
+    return sortByPriority(pendingTasks.value);
   }
 
   if (currentFilter.value === "completed") {
-    return completedTasks.value;
+    return sortByPriority(completedTasks.value);
   }
 
-  return taskStore.tasks;
+  return sortByPriority(taskStore.tasks);
 });
 
 const progressPercent = computed(() => {
